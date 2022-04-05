@@ -1,0 +1,6 @@
+users_autocomplete_url: "http://autocomplete.int.factory.tools/v1"
+ldap_get_agencies_url: "https://elastic.snaplogic.com:443/api/1/rest/slsched/feed/TBWADev/projects/shared/get_agency_lobby"
+users_autocomplete_token: <%= ENV["USERS_AUTOCOMPLETE_TOKEN"] %>
+default_agency_admin_email: ["thelobby@factory.tools"]
+nuxeo_server_url: 'https://library-staging.factory.tools'
+backslash_url: https://backslash-staging.tbwa.com

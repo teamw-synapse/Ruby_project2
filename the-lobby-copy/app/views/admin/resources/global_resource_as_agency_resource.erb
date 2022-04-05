@@ -1,0 +1,17 @@
+<%= semantic_form_for [:admin, @resource], builder: ActiveAdmin::FormBuilder, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+<%= f.semantic_errors %>
+<%= f.inputs do %>
+<%= f.input :agency_ids, as: :select, collection: @user_agencies.order("LOWER(name)").collect{|agency| ["#{agency.name}, #{agency.city}, #{agency.country}", agency.id]},
+multiple: true, selected: f.object.agencies_resources.collect(&:agency_id),label: "Select Agencies to make Agency Resource" %>
+<%= f.input :image, as: :file, label: "Image*", :input_html => { :disabled => true } %>
+  <% if @resource.image_url %>
+    <%=image_tag(resource.image_url.to_s, width: '50', height:'50',class: "allignment")%>
+  <% end %>
+<% end %>
+<%= f.actions %>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#resource_agency_ids").multiselect().multiselectfilter();
+  });
+</script>

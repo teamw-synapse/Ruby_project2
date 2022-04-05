@@ -1,0 +1,5 @@
+---
+# The authentication token for the application.
+authentication: YrBu5KraCmT8avf6-o-XZdzbQmHcTvwr1od4WhVrC5c
+ignored_endpoints:
+  - MonitorController#index

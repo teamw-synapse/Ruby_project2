@@ -1,0 +1,63 @@
+<%= semantic_form_for [:admin, @resource], builder: ActiveAdmin::FormBuilder, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+<%= f.semantic_errors %>
+<%= f.inputs do %>
+<%= f.input :resource_template_list, label: "Resource Templates List", :as => :select, :collection => @resource_templates, :input_html => { :style => 'width: 20%; border: 1px solid #cecece; margin-left: -13px;'} %>
+<button name="button" type="submit" class="copy_template">COPY</button>
+<%= f.input :title %>
+
+<%= f.input :url, :input_html => {:style => 'width:20%'} %>
+<%= f.input :is_local , as: :boolean, :label => "Local Resource" %>
+<%= f.input :description %>
+<%= f.input :agency_ids, as: :select, collection: @user_agencies.order("LOWER(name)").collect{|agency| ["#{agency.name}, #{agency.city}, #{agency.country}", agency.id]},
+multiple: true, selected: f.object.agencies_resources.collect(&:agency_id),label: "Agencies" %>
+<%= f.input :image, as: :file, label: "Image*" %>
+  <% if @resource.image_url %>
+    <%=image_tag(resource.image_url.to_s, width: '50', height:'50',class: "allignment")%>
+  <% end %>
+<%= f.input :image_cache, as: :hidden, value: f.object.image_cache %>
+<%= f.input :template_image, as: :hidden %>
+<img src="<%= f.object.template_image.present? ? f.object.template_image : "" %>" id="resource_img" style="max-height: 50px;margin-left: 20%;" />
+<% if current_admin_user.global_admin? %>
+  <%= f.input :template %>
+  <%= f.input :highlight %>
+  <%= f.input :global %>
+<% end %>
+<%= f.input :show_info , as: :boolean ,:label => "Show Info" %>
+<div id="add_resource_info" style="padding-left: 21%;">
+  <ol>
+    <li><%= f.input :overview, :input_html => {:style => 'width:20%'}, :label => "Overview" %></li>
+    <li><%= f.input :key_contact, :input_html => {:style => 'width:20%'}, :label => "Key Contact" %></li>
+    <li><%= f.input :documentation, :input_html => {:style => 'width:20%'}, :label => "Documentation" %></li>
+  </ol>
+</div>
+<%= f.input :username %>
+<%= f.input :password%>
+<%= f.input :tag_names, value: f.object.tags.present? ? f.object.tags.pluck(:name).join() : "" %>
+<% end %>
+<%= f.actions %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    initializeResourceTagsAutoSuggest("<%= f.object.tag_names %>", );
+    toggleShowInfoResources();
+
+  });
+</script>
+<% end %>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#resource_agency_ids").multiselect().multiselectfilter();
+	});
+
+  function initializeResourceTagsAutoSuggest(tags){
+    $("#resource_tag_names").autoSuggest("/admin/tags/auto_suggest", {
+      selectedItemProp: "name",
+      searchObjProps: "name",
+      selectedValuesProp: "name",
+      asHtmlID: "resource_tags",
+      preFill: tags,
+      startText: "<%= Tag::PLACEHOLDER_TEXT %>"
+    });
+  }
+</script>

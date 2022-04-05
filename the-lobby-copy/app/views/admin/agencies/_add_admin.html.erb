@@ -1,0 +1,31 @@
+<%= form_tag(add_agency_admin_admin_agency_path(@agency)) do %>
+  <%= label_tag 'Select User' %>
+  <%= text_field_tag :ad_email, nil %>
+  <br><br>
+  <%= submit_tag "Add Agency Admin" %>
+<% end %>
+
+<style type="text/css">
+  .custom {
+    width: 260px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+</style>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $( "#ad_email" ).autocomplete({
+      source: "<%= autocomplete_user_email_admin_users_url(format: :json) %>",
+      minLength: 2,
+      classes: {"ui-autocomplete": "custom"},
+      select: function( event, ui ) {
+        $("#ad_email").val(ui.item.value)
+      }
+    });
+
+  });
+
+</script>

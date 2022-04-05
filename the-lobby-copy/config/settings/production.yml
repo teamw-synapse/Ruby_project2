@@ -1,0 +1,4 @@
+skip_global_admin_emails: []
+default_agency_admin_email: ["thelobby@factory.tools"]
+nuxeo_server_url: 'https://library.factory.tools'
+backslash_url: https://backslash.tbwa.com

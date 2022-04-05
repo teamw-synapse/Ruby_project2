@@ -1,0 +1,29 @@
+%p
+  %b NOTE: 
+  You can reorder highlights by dragging up or down.
+%table.table
+  %thead 
+    %tr
+      %th Id
+      %th URL 
+      %th Title 
+      %th Image 
+  %tbody#high{"data-url": highlight_sort_admin_resources_path} 
+    - Resource.where(highlight: true).order(:highlight_position).each do |highlight| 
+      %tr{id: dom_id(highlight)}
+        %td #{highlight.id}
+        %td #{highlight.url}
+        %td #{highlight.title}
+        %td 
+          - if highlight.image.present?
+            #{image_tag(highlight.image_url, height: '80', width: '100')}
+
+:css
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  table, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }

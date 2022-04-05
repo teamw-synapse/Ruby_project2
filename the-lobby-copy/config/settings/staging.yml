@@ -1,0 +1,2 @@
+skip_global_admin_emails: []
+default_agency_admin_email: ["thelobby@factory.tools"]

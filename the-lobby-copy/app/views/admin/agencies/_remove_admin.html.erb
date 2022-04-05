@@ -1,0 +1,5 @@
+<%= form_tag(remove_agency_admin_admin_agency_path(@agency)) do %>
+  <%= select_tag :user_id, options_for_select(agency_admins.collect{ |u| [u.email, u.id] }) %>
+  <br><br>
+  <%= submit_tag "Remove as Agency Admin" %>
+<% end %>
